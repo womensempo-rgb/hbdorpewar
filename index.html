@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Pages</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5EFE6;
+    --cream-light: #FAF6F0;
+    --cream-dark: #EDE3D5;
+    --red-dark: #7B1C1C;
+    --red-maroon: #8B2020;
+    --red-medium: #A63232;
+    --red-light: #C0504A;
+    --red-blush: #D4736D;
+    --white-warm: #FFFDF9;
+    --text-dark: #2A1010;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a0a0a;
+    font-family: 'Lato', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ====== OPENING SCREEN ====== */
+  #opening-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: radial-gradient(ellipse at center, #2a0e0e 0%, #0f0505 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  #opening-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.04);
+  }
+
+  /* Floating card on opening */
+  .opening-card {
+    position: relative;
+    width: 340px;
+    height: 460px;
+    background: var(--cream-light);
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(123,28,28,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    animation: floatCard 6s ease-in-out infinite;
+    overflow: hidden;
+  }
+  @keyframes floatCard {
+    0%,100% { transform: translateY(0px) rotate(-0.5deg); }
+    50% { transform: translateY(-12px) rotate(0.5deg); }
+  }
+
+  /* Envelope line decorations */
+  .envelope-lines {
+    position: absolute;
+    inset: 0;
+  }
+  .envelope-lines line {
+    stroke: rgba(123,28,28,0.12);
+    stroke-width: 1;
+  }
+
+  /* Opening quote */
+  .opening-quote {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    color: var(--red-maroon);
+    text-align: center;
+    line-height: 1.4;
+    padding: 0 36px;
+    z-index: 2;
+    margin-top: -50px;
+  }
+
+  /* Wax seal */
+  .wax-seal {
+    width: 70px;
+    height: 70px;
+    z-index: 2;
+    margin: 18px 0 10px;
+    animation: sealPulse 3s ease-in-out infinite;
+  }
+  @keyframes sealPulse {
+    0%,100% { transform: scale(1); filter: drop-shadow(0 4px 12px rgba(123,28,28,0.4)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 6px 20px rgba(123,28,28,0.7)); }
+  }
+
+  /* OPEN button */
+  .open-btn {
+    z-index: 2;
+    margin-top: 8px;
+    background: none;
+    border: 1.5px solid var(--red-maroon);
+    color: var(--red-maroon);
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 8px 28px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.35s ease;
+    animation: btnGlow 2.5s ease-in-out infinite;
+  }
+  @keyframes btnGlow {
+    0%,100% { box-shadow: 0 0 8px rgba(123,28,28,0.2); }
+    50% { box-shadow: 0 0 18px rgba(123,28,28,0.5); }
+  }
+  .open-btn:hover {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+    color: var(--cream-light);
+    transform: scale(1.05);
+  }
+
+  /* Opening signature */
+  .opening-signature {
+    position: absolute;
+    bottom: 36px;
+    text-align: center;
+    z-index: 2;
+  }
+  .opening-signature .love-text {
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red-maroon);
+    opacity: 0.7;
+  }
+  .opening-signature .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red-maroon);
+    font-weight: 400;
+  }
+
+  /* ====== NAV ====== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(26,10,10,0.92);
+    backdrop-filter: blur(12px);
+    padding: 14px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(123,28,28,0.4);
+    opacity: 0;
+    transform: translateY(-100%);
+    transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+  }
+  nav.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  nav .logo {
+    font-family: 'Great Vibes', cursive;
+    font-size: 26px;
+    color: var(--cream);
+    letter-spacing: 1px;
+  }
+  nav .nav-links {
+    display: flex;
+    gap: 8px;
+  }
+  nav .nav-links button {
+    background: none;
+    border: 1px solid rgba(245,239,230,0.2);
+    color: var(--cream-dark);
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.3s;
+  }
+  nav .nav-links button:hover,
+  nav .nav-links button.active {
+    background: var(--red-dark);
+    border-color: var(--red-dark);
+    color: var(--cream-light);
+  }
+
+  /* ====== PAGES CONTAINER ====== */
+  .pages-wrap {
+    padding-top: 70px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.5s;
+  }
+  .pages-wrap.visible {
+    opacity: 1;
+  }
+
+  /* ====== PAGE SECTION ====== */
+  .page-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .page-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ====== CARD BASE ====== */
+  .card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(123,28,28,0.15);
+  }
+
+  /* ===== PAGE 1: Flowers ===== */
+  #page1 { background: radial-gradient(ellipse at 70% 30%, #3d1010 0%, #120505 100%); }
+  .card-1 {
+    width: 380px;
+    height: 520px;
+    background: var(--cream-light);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 36px 30px 30px;
+    gap: 6px;
+  }
+  .card-1 .tag-line {
+    font-family: 'Great Vibes', cursive;
+    font-size: 30px;
+    color: var(--red-maroon);
+  }
+  .card-1 .big-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 400;
+    color: var(--red-dark);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    line-height: 1;
+    text-align: center;
+  }
+  .card-1 .site-link {
+    font-family: 'Lato', sans-serif;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: rgba(123,28,28,0.5);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .flower-img-wrap {
+    width: 240px;
+    height: 240px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .flower-svg {
+    width: 100%;
+    height: 100%;
+    animation: swayFlower 5s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes swayFlower {
+    0%,100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+  }
+  .discount-badge {
+    position: absolute;
+    bottom: 10px;
+    right: -10px;
+    width: 60px;
+    height: 60px;
+    background: var(--red-dark);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(123,28,28,0.5);
+    animation: badgePop 2s ease-in-out infinite;
+  }
+  @keyframes badgePop {
+    0%,100% { transform: scale(1) rotate(-5deg); }
+    50% { transform: scale(1.08) rotate(5deg); }
+  }
+  .hearts-row {
+    display: flex;
+    gap: 30px;
+    margin-top: 4px;
+  }
+  .hearts-row .h { font-size: 18px; color: var(--red-light); animation: heartBeat 1.5s ease-in-out infinite; }
+  .hearts-row .h:nth-child(2) { animation-delay: 0.5s; }
+  @keyframes heartBeat {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+  }
+
+  /* ===== PAGE 2: Birthday Quote ===== */
+  #page2 { background: radial-gradient(ellipse at 30% 70%, #2a1530 0%, #0d0510 100%); }
+  .card-2 {
+    width: 360px;
+    height: 480px;
+    background: var(--cream-light);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .wavy-border {
+    position: absolute;
+    inset: 8px;
+    border: 3px solid var(--red-blush);
+    border-radius: 20px;
+    animation: wavyPulse 4s ease-in-out infinite;
+  }
+  @keyframes wavyPulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.995); }
+  }
+  .bow-corner {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    font-size: 50px;
+    animation: bowWiggle 3s ease-in-out infinite;
+    transform-origin: bottom right;
+  }
+  @keyframes bowWiggle {
+    0%,100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+  }
+  .inner-quote-box {
+    border: 2px solid var(--red-medium);
+    padding: 28px 24px;
+    z-index: 2;
+    background: rgba(245,239,230,0.6);
+  }
+  .card-2 .quote-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 28px;
+    color: var(--red-dark);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .envelope-deco {
+    position: absolute;
+    bottom: 24px;
+    right: 28px;
+    font-size: 32px;
+    animation: envelopeBounce 2s ease-in-out infinite;
+  }
+  @keyframes envelopeBounce {
+    0%,100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-8px) rotate(5deg); }
+  }
+
+  /* ===== PAGE 3: Selamat Ulang Tahun ===== */
+  #page3 { background: radial-gradient(ellipse at center, #1a0808 0%, #080202 100%); }
+  .card-3 {
+    width: 360px;
+    height: 460px;
+    background: var(--red-dark);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 40px;
+  }
+  .scallop-border-3 {
+    position: absolute;
+    inset: 0;
+  }
+  .card-3 .main-quote {
+    font-family: 'Great Vibes', cursive;
+    font-size: 58px;
+    color: var(--cream-light);
+    text-align: center;
+    line-height: 1.1;
+    z-index: 2;
+    animation: glowText 3s ease-in-out infinite;
+  }
+  @keyframes glowText {
+    0%,100% { text-shadow: 0 0 20px rgba(245,239,230,0.3); }
+    50% { text-shadow: 0 0 40px rgba(245,239,230,0.6), 0 0 80px rgba(245,239,230,0.2); }
+  }
+  .card-3 .sub-quote {
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(245,239,230,0.6);
+    text-align: center;
+    z-index: 2;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+  .floating-particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(245,239,230,0.3);
+    border-radius: 50%;
+    animation: particleFloat linear infinite;
+  }
+
+  /* ===== PAGE 4: Wish ===== */
+  #page4 { background: radial-gradient(ellipse at 80% 20%, #3d1010 0%, #0f0505 100%); }
+  .card-4 {
+    width: 360px;
+    height: 480px;
+    background: var(--red-dark);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+  }
+  .scallop-border-4 {
+    position: absolute;
+    inset: 12px;
+    border: 2px solid rgba(245,239,230,0.3);
+    border-radius: 8px;
+    animation: scallop5Pulse 4s ease-in-out infinite;
+  }
+  @keyframes scallop5Pulse {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+  .card-4 .inspire-quote {
+    font-family: 'Great Vibes', cursive;
+    font-size: 30px;
+    color: var(--cream-light);
+    text-align: center;
+    line-height: 1.6;
+    z-index: 2;
+    padding: 0 20px;
+  }
+  .star-deco {
+    color: rgba(245,239,230,0.5);
+    font-size: 18px;
+    margin: 0 8px;
+    animation: starTwinkle 2s ease-in-out infinite;
+  }
+  @keyframes starTwinkle {
+    0%,100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3) rotate(15deg); }
+  }
+
+  /* ===== PAGE 5: Dear ... ===== */
+  #page5 { background: radial-gradient(ellipse at 40% 60%, #2d0f0f 0%, #0a0303 100%); }
+  .card-5 {
+    width: 380px;
+    height: 500px;
+    background: var(--cream);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 40px 36px 36px;
+    overflow: hidden;
+  }
+  .bg-heart {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 200px;
+    height: 200px;
+    opacity: 0.15;
+  }
+  .card-5 .hello-love {
+    font-family: 'Great Vibes', cursive;
+    font-size: 60px;
+    color: var(--red-dark);
+    line-height: 1;
+    z-index: 2;
+    align-self: flex-start;
+    animation: helloFade 4s ease-in-out infinite;
+  }
+  @keyframes helloFade {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  .envelope-wrap {
+    z-index: 2;
+    margin: 20px 0 16px;
+    animation: envelopeLift 5s ease-in-out infinite;
+  }
+  @keyframes envelopeLift {
+    0%,100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+  }
+  .card-5 .invite-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--red-maroon);
+    text-align: center;
+    line-height: 1.7;
+    z-index: 2;
+  }
+  .card-5 .invite-sub {
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(123,28,28,0.5);
+    z-index: 2;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  /* ===== PAGE 6: Closing ===== */
+  #page6 { background: radial-gradient(ellipse at 50% 40%, #3a0e0e 0%, #0d0404 100%); }
+  .card-6 {
+    width: 360px;
+    height: 480px;
+    background: #7B1C1C;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px 40px;
+  }
+  .scallop-svg-6 {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .p6-content {
+    z-index: 2;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .p6-quote {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    color: var(--cream-light);
+    line-height: 1.55;
+    text-align: center;
+    padding: 0 10px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+  }
+  .p6-star {
+    color: rgba(245,239,230,0.55);
+    font-size: 16px;
+    display: inline-block;
+    animation: starTwinkle 2.5s ease-in-out infinite;
+  }
+
+  /* ====== EDIT PANEL ====== */
+  .edit-panel {
+    position: fixed;
+    right: 0; top: 70px; bottom: 0;
+    width: 300px;
+    background: rgba(20,6,6,0.97);
+    border-left: 1px solid rgba(123,28,28,0.3);
+    padding: 24px 20px;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    z-index: 50;
+    backdrop-filter: blur(20px);
+  }
+  .edit-panel.open { transform: translateX(0); }
+  .edit-panel h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    color: var(--cream);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(123,28,28,0.3);
+    letter-spacing: 1px;
+  }
+  .field-group {
+    margin-bottom: 18px;
+  }
+  .field-group label {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: rgba(245,239,230,0.5);
+    margin-bottom: 6px;
+    font-family: 'Lato', sans-serif;
+  }
+  .field-group input,
+  .field-group textarea {
+    width: 100%;
+    background: rgba(245,239,230,0.05);
+    border: 1px solid rgba(123,28,28,0.4);
+    color: var(--cream);
+    padding: 8px 12px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    border-radius: 3px;
+    resize: vertical;
+    transition: border-color 0.3s;
+  }
+  .field-group input:focus,
+  .field-group textarea:focus {
+    outline: none;
+    border-color: var(--red-medium);
+    background: rgba(245,239,230,0.08);
+  }
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red-medium);
+    margin: 20px 0 12px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  /* ====== EDIT TOGGLE BTN ====== */
+  .edit-toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    z-index: 60;
+    background: var(--red-dark);
+    color: var(--cream);
+    border: none;
+    padding: 14px 22px;
+    font-family: 'Lato', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 30px;
+    box-shadow: 0 8px 30px rgba(123,28,28,0.6);
+    transition: all 0.3s;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .edit-toggle.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .edit-toggle:hover {
+    background: var(--red-medium);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(123,28,28,0.8);
+  }
+
+  /* ====== CLOSE PANEL BTN ====== */
+  .close-panel {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: none;
+    color: rgba(245,239,230,0.4);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .close-panel:hover { color: var(--cream); }
+
+  /* ====== SCROLL HINT ====== */
+  .scroll-hint {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(245,239,230,0.3);
+    font-family: 'Lato', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    animation: hintBounce 2s ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .scroll-hint.visible { opacity: 1; }
+  @keyframes hintBounce {
+    0%,100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 0.7; transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ====== EDITABLE ELEMENTS ====== */
+  [contenteditable] {
+    outline: none;
+    cursor: text;
+    transition: background 0.3s;
+    border-radius: 3px;
+  }
+  [contenteditable]:hover {
+    background: rgba(123,28,28,0.1);
+  }
+  [contenteditable]:focus {
+    background: rgba(123,28,28,0.15);
+    box-shadow: 0 0 0 2px rgba(123,28,28,0.4);
+  }
+
+  /* responsive */
+  @media (max-width: 500px) {
+    .opening-card { width: 300px; height: 420px; }
+    .card-1, .card-3, .card-4, .card-5 { width: 320px; }
+    .card-2 { width: 300px; }
+    .opening-quote { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+    <!-- ===== BACKGROUND MUSIC ===== -->
+<audio id="bgMusic" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ====== OPENING SCREEN ====== -->
+<div id="opening-screen">
+  <div class="opening-card">
+    <svg class="envelope-lines" viewBox="0 0 340 460">
+      <line x1="0" y1="0" x2="170" y2="200"/>
+      <line x1="340" y1="0" x2="170" y2="200"/>
+      <line x1="0" y1="460" x2="170" y2="200"/>
+      <line x1="340" y1="460" x2="170" y2="200"/>
+      <line x1="0" y1="0" x2="340" y2="0"/>
+      <line x1="0" y1="460" x2="340" y2="460"/>
+      <line x1="0" y1="0" x2="0" y2="460"/>
+      <line x1="340" y1="0" x2="340" y2="460"/>
+    </svg>
+
+    <p class="opening-quote">ada pesan spesial untukmu hari ini...</p>
+
+    <!-- Wax Seal -->
+    <svg class="wax-seal" viewBox="0 0 70 70">
+      <circle cx="35" cy="35" r="33" fill="#7B1C1C"/>
+      <circle cx="35" cy="35" r="29" fill="#6A1818" opacity="0.5"/>
+      <!-- Birthday cake icon -->
+      <rect x="22" y="38" width="26" height="16" rx="2" fill="none" stroke="#FAF6F0" stroke-width="2"/>
+      <rect x="26" y="32" width="18" height="8" rx="2" fill="none" stroke="#FAF6F0" stroke-width="1.8"/>
+      <line x1="35" y1="26" x2="35" y2="30" stroke="#FAF6F0" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="35" cy="25" r="2.5" fill="#FAF6F0" opacity="0.85"/>
+      <line x1="28" y1="38" x2="28" y2="42" stroke="#FAF6F0" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.5"/>
+      <line x1="35" y1="38" x2="35" y2="42" stroke="#FAF6F0" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.5"/>
+      <line x1="42" y1="38" x2="42" y2="42" stroke="#FAF6F0" stroke-width="1.2" stroke-dasharray="2,2" opacity="0.5"/>
+    </svg>
+
+    <!-- OPEN Button -->
+    <button class="open-btn" onclick="openPages()">✦ Open ✦</button>
+
+    <div class="opening-signature">
+      <p class="love-text">Untuk,</p>
+      <p class="name">Kamu</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== NAV ====== -->
+<nav id="mainNav">
+  <div class="logo">Birthday Letter</div>
+  <div class="nav-links">
+    <button onclick="scrollToPage(1)" class="active" id="nav1">01</button>
+    <button onclick="scrollToPage(2)" id="nav2">02</button>
+    <button onclick="scrollToPage(3)" id="nav3">03</button>
+    <button onclick="scrollToPage(4)" id="nav4">04</button>
+    <button onclick="scrollToPage(5)" id="nav5">05</button>
+    <button onclick="scrollToPage(6)" id="nav6">06</button>
+  </div>
+</nav>
+
+<div class="pages-wrap" id="pagesWrap">
+
+  <!-- PAGE 1: Flowers -->
+  <section class="page-section" id="page1">
+    <div class="card card-1">
+      <p class="tag-line" >Selamat Ulang Tahun</p>
+      <h1 class="big-title" >KAKAK</h1>
+      <p class="site-link" >di hari yang indah & bahagia ini</p>
+      <div class="flower-img-wrap">
+        <svg class="flower-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+          <!-- Stems -->
+          <line x1="120" y1="230" x2="100" y2="140" stroke="#5a8a3c" stroke-width="3" stroke-linecap="round"/>
+          <line x1="120" y1="230" x2="120" y2="135" stroke="#5a8a3c" stroke-width="3"/>
+          <line x1="120" y1="230" x2="140" y2="140" stroke="#5a8a3c" stroke-width="3" stroke-linecap="round"/>
+          <line x1="120" y1="230" x2="85" y2="145" stroke="#5a8a3c" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="120" y1="230" x2="155" y2="145" stroke="#5a8a3c" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Leaves -->
+          <ellipse cx="108" cy="175" rx="10" ry="5" fill="#4a7a2c" transform="rotate(-30 108 175)"/>
+          <ellipse cx="132" cy="172" rx="10" ry="5" fill="#4a7a2c" transform="rotate(30 132 172)"/>
+          <!-- Wrap -->
+          <path d="M85 190 Q120 210 155 190 L150 230 Q120 240 90 230Z" fill="#C8956C" opacity="0.7"/>
+          <path d="M90 192 Q120 208 150 192 L146 228 Q120 236 94 228Z" fill="#D4A57C" opacity="0.5"/>
+          <!-- Ribbon -->
+          <path d="M100 215 Q120 225 140 215" stroke="#A63232" stroke-width="2.5" fill="none"/>
+          <!-- Tulip 1 (center) -->
+          <ellipse cx="120" cy="120" rx="10" ry="22" fill="#E8604C"/>
+          <ellipse cx="110" cy="118" rx="8" ry="20" fill="#F4885C" transform="rotate(-15 110 130)"/>
+          <ellipse cx="130" cy="118" rx="8" ry="20" fill="#E05040" transform="rotate(15 130 130)"/>
+          <!-- Tulip 2 (left) -->
+          <ellipse cx="95" cy="128" rx="9" ry="20" fill="#F0A060"/>
+          <ellipse cx="86" cy="126" rx="7" ry="18" fill="#F8BC78" transform="rotate(-15 86 138)"/>
+          <ellipse cx="104" cy="126" rx="7" ry="18" fill="#E8904A" transform="rotate(15 104 138)"/>
+          <!-- Tulip 3 (right) -->
+          <ellipse cx="145" cy="128" rx="9" ry="20" fill="#E06060"/>
+          <ellipse cx="136" cy="126" rx="7" ry="18" fill="#EC8070" transform="rotate(-15 136 138)"/>
+          <ellipse cx="154" cy="126" rx="7" ry="18" fill="#D84848" transform="rotate(15 154 138)"/>
+          <!-- Pink flower left -->
+          <circle cx="78" cy="132" r="12" fill="#F4A0B8"/>
+          <circle cx="78" cy="120" r="7" fill="#F4A0B8"/>
+          <circle cx="67" cy="132" r="7" fill="#F0B0C0"/>
+          <circle cx="78" cy="132" r="4" fill="#F8E0A0"/>
+          <!-- Pink flower right -->
+          <circle cx="162" cy="132" r="12" fill="#E890A8"/>
+          <circle cx="162" cy="120" r="7" fill="#F0A0B8"/>
+          <circle cx="173" cy="132" r="7" fill="#E090A8"/>
+          <circle cx="162" cy="132" r="4" fill="#F8E0A0"/>
+          <!-- Tag -->
+          <rect x="108" y="190" width="38" height="22" rx="2" fill="#FAF6F0"/>
+          <line x1="110" y1="190" x2="106" y2="184" stroke="#aaa" stroke-width="1"/>
+          <text x="127" y="200" text-anchor="middle" font-size="6.5" font-family="serif" fill="#7B1C1C">Happy</text>
+          <text x="127" y="209" text-anchor="middle" font-size="6.5" font-family="serif" fill="#7B1C1C">Birthday</text>
+        </svg>
+        <div class="discount-badge">
+          <svg viewBox="0 0 40 36" width="32" height="30">
+            <!-- Star/cake icon inside badge -->
+            <text x="20" y="26" text-anchor="middle" font-size="22" fill="#FAF6F0">🎂</text>
+          </svg>
+        </div>
+      </div>
+      <div class="hearts-row">
+        <span class="h">🎉</span>
+        <span class="h">🎈</span>
+        <span class="h">🎉</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: Quote Birthday -->
+  <section class="page-section" id="page2">
+    <div class="card card-2">
+      <div class="wavy-border"></div>
+      <div class="bow-corner">🎀</div>
+      <div class="inner-quote-box">
+        <p class="quote-text">Happy birthday!<br>Here’s to another year of life’s wonderful<br>journey, kak.</p>
+      </div>
+      <div class="envelope-deco">🎁</div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: Selamat Ulang Tahun (main) -->
+  <section class="page-section" id="page3">
+    <div class="card card-3">
+      <svg class="scallop-border-3" viewBox="0 0 360 460" preserveAspectRatio="none">
+        <path d="M20,10 Q30,0 40,10 Q50,20 60,10 Q70,0 80,10 Q90,20 100,10 Q110,0 120,10 Q130,20 140,10 Q150,0 160,10 Q170,20 180,10 Q190,0 200,10 Q210,20 220,10 Q230,0 240,10 Q250,20 260,10 Q270,0 280,10 Q290,20 300,10 Q310,0 320,10 Q330,20 340,10
+          L350,20 Q360,30 350,40 Q340,50 350,60 Q360,70 350,80 Q340,90 350,100 Q360,110 350,120 Q340,130 350,140 Q360,150 350,160 Q340,170 350,180 Q360,190 350,200 Q340,210 350,220 Q360,230 350,240 Q340,250 350,260 Q360,270 350,280 Q340,290 350,300 Q360,310 350,320 Q340,330 350,340 Q360,350 350,360 Q340,370 350,380 Q360,390 350,400 Q340,410 350,420 Q360,430 350,440 L350,450
+          Q340,460 330,450 Q320,440 310,450 Q300,460 290,450 Q280,440 270,450 Q260,460 250,450 Q240,440 230,450 Q220,460 210,450 Q200,440 190,450 Q180,460 170,450 Q160,440 150,450 Q140,460 130,450 Q120,440 110,450 Q100,460 90,450 Q80,440 70,450 Q60,460 50,450 Q40,440 30,450 Q20,460 10,450
+          L10,440 Q0,430 10,420 Q20,410 10,400 Q0,390 10,380 Q20,370 10,360 Q0,350 10,340 Q20,330 10,320 Q0,310 10,300 Q20,290 10,280 Q0,270 10,260 Q20,250 10,240 Q0,230 10,220 Q20,210 10,200 Q0,190 10,180 Q20,170 10,160 Q0,150 10,140 Q20,130 10,120 Q0,110 10,100 Q20,90 10,80 Q0,70 10,60 Q20,50 10,40 Q0,30 10,20Z"
+          fill="none" stroke="rgba(245,239,230,0.15)" stroke-width="2"/>
+      </svg>
+      <div class="floating-particles" id="particles3"></div>
+      <p class="main-quote">happy 26 kak<br></p>
+      <p class="sub-quote">Terima kasih ya kak karena sudah bertahan sejauh ini. Hidup mungkin tidak selalu berjalan sesuai harapan, tapi kamu sudah melakukan yang terbaik sejauh yang kamu bisa. Itu sudah lebih dari cukup. Semoga di umur ini, kamu belajar untuk lebih lembut pada dirimu sendiri, tidak terlalu keras, & tidak terlalu menyalahkan keadaan. Semoga kamu dikelilingi oleh hal-hal baik, & menemukan kebahagiaan dari hal-hal sederhana yang sering terlewatkan.<br></p>
+    </div>
+  </section>
+
+  <!-- PAGE 4: Wish/Doa -->
+  <section class="page-section" id="page4">
+    <div class="card card-4">
+      <div class="scallop-border-4"></div>
+      <div style="z-index:2; text-align:center;">
+        <span class="star-deco">✦</span>
+        <p class="inspire-quote">Semoga setiap doamu terkabul dan setiap langkahmu selalu dirahmati</p>
+        <span class="star-deco" style="animation-delay:1s;">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 5: Dear Kamu -->
+  <section class="page-section" id="page5">
+    <div class="card card-5">
+      <!-- Background heart -->
+      <svg class="bg-heart" viewBox="0 0 200 200">
+        <path d="M100,170 C100,170 20,120 20,70 C20,40 40,20 70,25 C85,28 100,40 100,40 C100,40 115,28 130,25 C160,20 180,40 180,70 C180,120 100,170 100,170Z" fill="#7B1C1C"/>
+      </svg>
+      <p class="hello-love">Hai,<br>Kak.</p>
+      <!-- Envelope/card SVG -->
+      <div class="envelope-wrap">
+        <svg width="160" height="110" viewBox="0 0 160 110">
+          <rect x="5" y="5" width="150" height="100" rx="4" fill="#F5EFE6" stroke="#DDD5C5" stroke-width="1.5"/>
+          <path d="M5,5 L80,65 L155,5" stroke="#DDD5C5" stroke-width="1.5" fill="none"/>
+          <path d="M5,105 L55,55" stroke="#DDD5C5" stroke-width="1.5" fill="none"/>
+          <path d="M155,105 L105,55" stroke="#DDD5C5" stroke-width="1.5" fill="none"/>
+          <!-- Birthday seal -->
+          <circle cx="80" cy="72" r="16" fill="#7B1C1C"/>
+          <text x="80" y="78" text-anchor="middle" font-size="14" fill="#FAF6F0">🎂</text>
+        </svg>
+      </div>
+      <p class="invite-text">Semoga ulang tahunmu jadi awal dari babak terbaik dalam hidupmu.</p>
+      <p class="invite-sub">Kamu layak atas semua kebaikan di dunia ini, tapi jangan suka buli akuuu :3</p>
+    </div>
+  </section>
+
+  <!-- PAGE 6: Closing -->
+  <section class="page-section" id="page6">
+    <div class="card card-6">
+      <svg class="scallop-svg-6" viewBox="0 0 360 480" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="
+          M30,16 Q40,4 50,16 Q60,28 70,16 Q80,4 90,16 Q100,28 110,16 Q120,4 130,16 Q140,28 150,16 Q160,4 170,16 Q180,28 190,16 Q200,4 210,16 Q220,28 230,16 Q240,4 250,16 Q260,28 270,16 Q280,4 290,16 Q300,28 310,16 Q320,4 330,16
+          L344,30 Q356,40 344,54 Q332,68 344,82 Q356,96 344,110 Q332,124 344,138 Q356,152 344,166 Q332,180 344,194 Q356,208 344,222 Q332,236 344,250 Q356,264 344,278 Q332,292 344,306 Q356,320 344,334 Q332,348 344,362 Q356,376 344,390 Q332,404 344,418 Q356,432 344,446 L344,464
+          Q330,476 316,464 Q302,452 288,464 Q274,476 260,464 Q246,452 232,464 Q218,476 204,464 Q190,452 176,464 Q162,476 148,464 Q134,452 120,464 Q106,476 92,464 Q78,452 64,464 Q50,476 36,464 Q22,452 16,464
+          L16,446 Q4,432 16,418 Q28,404 16,390 Q4,376 16,362 Q28,348 16,334 Q4,320 16,306 Q28,292 16,278 Q4,264 16,250 Q28,236 16,222 Q4,208 16,194 Q28,180 16,166 Q4,152 16,138 Q28,124 16,110 Q4,96 16,82 Q28,68 16,54 Q4,40 16,30Z"
+          fill="none" stroke="rgba(245,239,230,0.45)" stroke-width="2.2"/>
+      </svg>
+      <div class="p6-content">
+        <span class="p6-star">✦</span>
+        <p class="p6-quote">Semoga semua yang baik selalu menemukan jalan ke kamu<br>🤍<br></p>
+        <span class="p6-star" style="animation-delay:1.2s;">✦</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Edit Panel -->
+<div class="edit-panel" id="editPanel">
+  <button class="close-panel" onclick="toggleEdit()">✕</button>
+  <h3>Edit Teks</h3>
+  
+  <p class="section-label">Pembuka — Amplop</p>
+  <div class="field-group">
+    <label>Quote Pembuka</label>
+    <textarea rows="2" oninput="updateEl('open-quote', this.value)"></textarea>
+  </div>
+  <div class="field-group">
+    <label>Nama Penerima</label>
+    <input type="text" oninput="updateEl('open-name', this.value)">
+  </div>
+
+  <p class="section-label">Halaman 1 — Bunga</p>
+  <div class="field-group">
+    <label>Tagline</label>
+    <input type="text" oninput="updateEl('p1-tag', this.value)">
+  </div>
+  <div class="field-group">
+    <label>Judul</label>
+    <input type="text" oninput="updateEl('p1-title', this.value)">
+  </div>
+  <div class="field-group">
+    <label>Sub</label>
+    <input type="text" oninput="updateEl('p1-site', this.value)">
+  </div>
+
+  <p class="section-label">Halaman 2 — Quote</p>
+  <div class="field-group">
+    <label>Quote</label>
+    <textarea rows="3" oninput="updateEl('p2-quote', this.value)"></textarea>
+  </div>
+
+  <p class="section-label">Halaman 3 — Selamat Ulang Tahun</p>
+  <div class="field-group">
+    <label>Ucapan Utama</label>
+    <textarea rows="2" oninput="updateEl('p3-main', this.value)"></textarea>
+  </div>
+  <div class="field-group">
+    <label>Sub Ucapan</label>
+    <textarea rows="2" oninput="updateEl('p3-sub', this.value)"></textarea>
+  </div>
+
+  <p class="section-label">Halaman 4 — Doa</p>
+  <div class="field-group">
+    <label>Doa / Harapan</label>
+    <textarea rows="2" oninput="updateEl('p4-quote', this.value)"></textarea>
+  </div>
+
+  <p class="section-label">Halaman 5 — Pesan</p>
+  <div class="field-group">
+    <label>Sapaan</label>
+    <input type="text" oninput="updateEl('p5-hello', this.value)">
+  </div>
+  <div class="field-group">
+    <label>Pesan Utama</label>
+    <textarea rows="2" oninput="updateEl('p5-invite', this.value)"></textarea>
+  </div>
+  <div class="field-group">
+    <label>Pesan Sub</label>
+    <input type="text" oninput="updateEl('p5-sub', this.value)">
+  </div>
+
+  <p class="section-label">Halaman 6 — Penutup</p>
+  <div class="field-group">
+    <label>Quote Penutup</label>
+    <textarea rows="3" oninput="updateEl('p6-quote', this.value)"></textarea>
+  </div>
+</div>
+
+<div style="display:flex; gap:10px; margin-top:10px;">
+  
+ <div style="width: 100%; display: flex; justify-content: center; margin: 20px 0;">
+    <div style="display: flex; flex-direction: row; gap: 12px; overflow-x: auto; padding: 10px; max-width: 100%; scrollbar-width: none; -ms-overflow-style: none;">
+        
+        <img src="kakak.jpeg" 
+             style="width: 110px; height: 110px; object-fit: cover; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+
+        <img src="kakak2.jpeg" 
+             style="width: 110px; height: 110px; object-fit: cover; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+
+        <img src="kakak3.jpeg" 
+             style="width: 110px; height: 110px; object-fit: cover; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+
+        <img src="kakak4.jpeg" 
+             style="width: 110px; height: 110px; object-fit: cover; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+
+        <img src="kakak5.jpeg" 
+             style="width: 110px; height: 110px; object-fit: cover; border-radius: 12px; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+             
+    </div>
+</div>
+
+<style>
+    /* Menghilangkan bar scroll agar tampilan tetap bersih */
+    div::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+
+</div>
+<script>
+  // ===== OPEN ANIMATION =====
+  function openPages() {
+    const opening = document.getElementById('opening-screen');
+    const nav = document.getElementById('mainNav');
+    const wrap = document.getElementById('pagesWrap');
+    const editToggle = document.getElementById('editToggle');
+
+    opening.classList.add('hidden');
+
+    setTimeout(() => {
+      nav.classList.add('visible');
+      wrap.classList.add('visible');
+      editToggle.classList.add('visible');
+
+      // Show scroll hint after a beat
+      setTimeout(() => {
+        document.getElementById('scrollHint').classList.add('visible');
+      }, 800);
+
+      // Trigger first section
+      setTimeout(() => {
+        document.querySelector('.page-section').classList.add('visible');
+      }, 600);
+
+      // Remove opening from DOM after transition
+      setTimeout(() => {
+        opening.style.display = 'none';
+      }, 1000);
+    }, 200);
+  }
+
+  // ===== NAV SCROLL =====
+  function scrollToPage(n) {
+    document.getElementById('page'+n).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ===== INTERSECTION OBSERVER =====
+  const sections = document.querySelectorAll('.page-section');
+  const navBtns = document.querySelectorAll('.nav-links button');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const idx = entry.target.id.replace('page','');
+        navBtns.forEach(b => b.classList.remove('active'));
+        document.getElementById('nav'+idx)?.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  // ===== PARTICLES =====
+  function createParticles() {
+    const container = document.getElementById('particles3');
+    if (!container) return;
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      p.style.animationDuration = (3 + Math.random() * 5) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+      container.appendChild(p);
+    }
+  }
+  createParticles();
+
+  const particles = document.querySelectorAll('.particle');
+  particles.forEach(p => {
+    const startY = parseFloat(p.style.top);
+    const speed = 0.5 + Math.random();
+    let y = startY;
+    function moveP() {
+      y -= speed * 0.02;
+      if (y < -5) y = 105;
+      p.style.top = y + '%';
+      p.style.opacity = y > 80 ? (105 - y) / 25 * 0.4 : y < 10 ? y / 10 * 0.4 : 0.3;
+      requestAnimationFrame(moveP);
+    }
+    moveP();
+  });
+
+  // ===== EDIT PANEL =====
+  const editable = {
+    'open-quote': document.querySelector('.opening-quote'),
+    'open-name':  document.querySelector('.opening-signature .name'),
+    'p1-tag':     document.querySelector('.card-1 .tag-line'),
+    'p1-title':   document.querySelector('.card-1 .big-title'),
+    'p1-site':    document.querySelector('.card-1 .site-link'),
+    'p2-quote':   document.querySelector('.card-2 .quote-text'),
+    'p3-main':    document.querySelector('.card-3 .main-quote'),
+    'p3-sub':     document.querySelector('.card-3 .sub-quote'),
+    'p4-quote':   document.querySelector('.card-4 .inspire-quote'),
+    'p5-hello':   document.querySelector('.card-5 .hello-love'),
+    'p5-invite':  document.querySelector('.card-5 .invite-text'),
+    'p5-sub':     document.querySelector('.card-5 .invite-sub'),
+    'p6-quote':   document.querySelector('.p6-quote'),
+  };
+
+  function updateEl(key, value) {
+    if (editable[key]) editable[key].innerHTML = value.replace(/\n/g, '<br>');
+  }
+
+  function toggleEdit() {
+    document.getElementById('editPanel').classList.toggle('open');
+  }
+
+  // Sync initial values to panel textareas/inputs
+  document.querySelectorAll('.edit-panel [oninput]').forEach(input => {
+    const match = input.getAttribute('oninput').match(/'([^']+)'/);
+    if (match) {
+      const key = match[1];
+      if (editable[key]) {
+        input.value = editable[key].innerText;
+      }
+    }
+  });
+
+  // Hide scroll hint after scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('scrollHint').style.opacity = '0';
+  }, { once: true });
+
+  // ===== PLAY MUSIC =====
+const music = document.getElementById('bgMusic');
+if (music) {
+  music.volume = 0.5; // atur volume (0 - 1)
+
+  music.play().catch(() => {
+    // fallback kalau autoplay diblok
+    document.body.addEventListener('click', () => {
+      music.play();
+    }, { once: true });
+  });
+}
+</script>
+</body>
+</html>
